@@ -1,18 +1,17 @@
+import pandas as pd
 import numpy as np
-import os
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
 
-def load_fmri_data(filepath):
-    """Loads fMRI data from a NumPy file."""
-    return np.load(filepath)
+def load_and_preprocess_data(data_path):
+    data = pd.read_csv(data_path)
+    # Assuming the last column is the target variable (efficacy)
+    X = data.iloc[:, :-1].values
+    y = data.iloc[:, -1].values
 
-def save_generated_data(data, filepath):
-    """Saves generated fMRI data to a NumPy file."""
-    np.save(filepath, data)
+    #Feature Scaling (important for neural networks)
+    scaler = StandardScaler()
+    X = scaler.fit_transform(X)
 
-def preprocess_data(data):
-    """Preprocesses the fMRI data (e.g., normalization, dimensionality reduction)."""
-    # Add your preprocessing steps here (e.g., standardization, PCA)
-    mean = np.mean(data, axis=0)
-    std = np.std(data, axis=0)
-    data = (data - mean) / std
-    return data
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    return X_train, X_test, y_train, y_test, scaler
