@@ -1,29 +1,32 @@
+import torch
 import numpy as np
-from data_utils import load_fmri_data
-import matplotlib.pyplot as plt
+from sklearn.metrics import accuracy_score, roc_auc_score
+from config import *
+from networks import DrugEfficacyModel
+from data_utils import load_and_preprocess_data
 
-# Load real and generated data
-real_data = load_fmri_data('data/fmri_data.npy')
-generated_data = load_fmri_data('results/generated_fmri_data.npy')
+def evaluate():
+    X_train, X_test, y_train, y_test, scaler = load_and_preprocess_data(DATA_PATH)
+    input_dim = X_train.shape[1]
+    hidden_dim = 128
+    output_dim = 1
 
-# Perform evaluation (e.g., calculate statistical measures, visualize data)
-# Example: compare the mean and standard deviation of real and generated data
-real_mean = np.mean(real_data, axis=0)
-real_std = np.std(real_data, axis=0)
-generated_mean = np.mean(generated_data, axis=0)
-generated_std = np.std(generated_data, axis=0)
+    model = DrugEfficacyModel(input_dim, hidden_dim, output_dim).to(DEVICE)
+    model.load_state_dict(torch.load(os.path.join(MODEL_SAVE_PATH, 'drug_efficacy_model.pth')))
+    model.eval()
 
-print("Real Data Mean:", real_mean)
-print("Real Data Std:", real_std)
-print("Generated Data Mean:", generated_mean)
-print("Generated Data Std:", generated_std)
+    X_test_tensor = torch.tensor(X_test, dtype=torch.float32).to(DEVICE)
+    with torch.no_grad():
+        predictions = model(X_test_tensor).cpu().numpy()
 
-# Example visualization (adjust as needed for your data)
-plt.figure(figsize=(10, 5))
-plt.subplot(1, 2, 1)
-plt.hist(real_data.flatten(), bins=30)
-plt.title("Real Data Histogram")
-plt.subplot(1, 2, 2)
-plt.hist(generated_data.flatten(), bins=30)
-plt.title("Generated Data Histogram")
-plt.show()
+    # Convert probabilities to binary predictions (threshold of 0.5)
+    binary_predictions = (predictions > 0.5).astype(int).flatten()
+
+    accuracy = accuracy_score(y_test, binary_predictions)
+    auc = roc_auc_score(y_test, predictions) #AUC is better than accuracy for imbalanced datasets
+
+    print(f"Accuracy: {accuracy:.4f}")
+    print(f"AUC: {auc:.4f}")
+
+if __name__ == "__main__":
+    evaluate()
