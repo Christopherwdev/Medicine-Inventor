@@ -1,60 +1,75 @@
-# ASD Data Synthesis using GANs: A Personal Project
+# Medicine-Inventor: Drug Efficacy Prediction using a Neural Network
 
-Hey there! 👋 This project represents my exploration into generating synthetic fMRI data for Autism Spectrum Disorder (ASD) research using Generative Adversarial Networks (GANs).  I've always been fascinated by the potential of AI to aid in medical research, and this project combines that fascination with my interest in ASD.
+This repository contains a simple neural network model for predicting the efficacy of drugs based on their molecular features.  This is a foundational example and can be expanded upon for more complex scenarios.
 
-This isn't just another GAN project; it's a journey of learning and discovery. I wanted to push myself beyond simple tutorials and build something that could potentially contribute to a more nuanced understanding of ASD.
+## Overview
 
-## Project Goals
+The model uses a supervised learning approach.  It takes as input a set of molecular features representing a drug and outputs a probability score indicating the likelihood of the drug being effective.  The model is trained using a binary cross-entropy loss function.
 
-The primary goal is to create a GAN capable of generating realistic fMRI data that resembles the characteristics observed in individuals with ASD.  This synthetic data can then be used to:
+## Dependencies
 
-* **Augment limited real-world datasets:**  Often, obtaining large, high-quality fMRI datasets for ASD research is challenging.  Synthetic data can help overcome this limitation.
-* **Test and validate algorithms:**  Generated data can be used to evaluate the robustness and performance of machine learning models designed for ASD diagnosis or biomarker discovery.
-* **Explore data distributions:**  Analyzing the generated data can provide insights into the underlying patterns and characteristics of brain activity associated with ASD.
+* Python 3.7+
+* PyTorch
+* scikit-learn
+* pandas
+* numpy
+* tqdm
 
-## Technologies Used
-
-* **Python:** The core language for this project.
-* **PyTorch:** A powerful deep learning framework for building and training the GAN.
-* **NumPy:** For numerical computations and data manipulation.
-* **Matplotlib:** For visualizing the results.
-
-
-## Getting Started
-
-1. **Install dependencies**
-
-Make sure you have PyTorch and the other necessary libraries installed. You can use pip:
+Install the required packages using pip:
 
 ```bash
-pip install torch numpy matplotlib
+pip install torch scikit-learn pandas numpy tqdm
 ```
 
-2. **Prepare your data**
+## Data
+The model requires a CSV file containing the drug features and efficacy labels. The expected format is:
 
-Replace the placeholder fmri_data.npy in the data/ directory with your preprocessed fMRI data. The data should be a NumPy array where each row represents a feature vector of an fMRI image. Ensure your data is properly preprocessed (e.g., normalized).
+Feature 1	Feature 2	...	Efficacy
+...	...	...	...
+The Efficacy column should contain binary values (0 or 1) representing ineffective and effective drugs, respectively. You'll need to prepare your own dataset or obtain one from a public repository. Make sure your data is preprocessed appropriately (e.g., scaling, handling missing values).
+Place your data CSV file in the root directory of the project and update the DATA_PATH variable in config.py accordingly.
 
-3. **Train the GAN**
-
-Run the train.py script. You can adjust hyperparameters in the script as needed.
+## Usage
+Data Preparation: Prepare your dataset in the format described above.
+Training: Run the training script:
 
 ```bash
 python train.py
 ```
 
-## My Future Development
+This will train the model and save it to the models directory.
+Evaluation: Run the evaluation script:
 
-Future work will include:
+```bash
+python evaluate.py
+```
 
-- Implementing more advanced GAN architectures (e.g., Wasserstein GAN, StyleGAN).
-- Developing more robust evaluation metrics.
-- Exploring different preprocessing techniques.
-- Investigating the use of conditional GANs to control specific aspects of the generated data.
+This will load the trained model and evaluate its performance on a test set. The accuracy and AUC scores will be printed to the console.
 
-## Contributions
-Contributions are welcome! If you have any suggestions, improvements, or bug fixes, please feel free to open an issue or submit a pull request.
+## File Structure
 
-## Contact
-Feel free to reach out if you have any questions or want to discuss this project further.
+Copy
+Medicine-Inventor/
+├── config.py          # Hyperparameters and file paths
+├── networks.py        # Neural network architecture
+├── data_utils.py      # Data loading and preprocessing functions
+├── train.py           # Training script
+└── evaluate.py        # Evaluation script
+└── models/            # Directory to save trained models (created during training)
+└── README.md          # This file
+
+## Model Architecture
+The model uses a simple feedforward neural network with two hidden layers and a sigmoid activation function in the output layer to produce a probability score. The architecture can be modified in networks.py.
+
+## Further Development
+This is a basic example. Consider these improvements:
+
+- More sophisticated architectures: Explore more complex neural network architectures (e.g., convolutional neural networks for image-based features, recurrent neural networks for sequential data).
+- Hyperparameter tuning: Optimize hyperparameters such as learning rate, batch size, and number of layers using techniques like grid search or random search.
+- Feature engineering: Carefully engineer relevant features from your data to improve model performance.
+- Advanced evaluation metrics: Use more comprehensive evaluation metrics beyond accuracy and AUC.
+
+This project provides a starting point for building more advanced drug efficacy prediction models. Remember to adapt and expand upon this foundation based on your specific needs and dataset.
 
 You can learn more about my coding projects here: [https://sites.google.com/view/wong-kin-on-christopher/computer-science](https://sites.google.com/view/wong-kin-on-christopher/computer-science)
+
