@@ -1,6 +1,6 @@
 # Medicine-Inventor: Drug Efficacy Prediction using a Neural Network
 
-This repository contains a simple neural network model for predicting the efficacy of drugs based on their molecular features.  This is a foundational example and can be expanded upon for more complex scenarios.
+This is a simple neural network model I built for predicting the efficacy of drugs based on their molecular features.  This is a foundational example I made to be expanded by you for more complex scenarios.
 
 ## Overview
 
@@ -24,8 +24,10 @@ pip install torch scikit-learn pandas numpy tqdm
 ## Data
 The model requires a CSV file containing the drug features and efficacy labels. The expected format is:
 
-Feature 1	Feature 2	...	Efficacy
-...	...	...	...
+Feature 1 | Feature 2 | ... | Efficacy
+--- | --- | --- | ---
+... | ... | ... | ...
+
 The Efficacy column should contain binary values (0 or 1) representing ineffective and effective drugs, respectively. You'll need to prepare your own dataset or obtain one from a public repository. Make sure your data is preprocessed appropriately (e.g., scaling, handling missing values).
 Place your data CSV file in the root directory of the project and update the DATA_PATH variable in config.py accordingly.
 
