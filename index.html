@@ -1,0 +1,2736 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+    <title>HOKBAR UI</title>
+    <style>
+        /* Universal standardization */
+        :root {
+            --border-radius: 15px;
+            --gap: 20px;
+            --font-size: 18px;
+            --big-font-size: 48px;
+            --padding: 10px;
+            --background-color: #000000;
+            --primary-color: #0FBD8C;
+            --secondary-color: #0fbd8c37;
+            --contrast-color: #4081FF;
+            --box-color: #222;
+            --text-color: white;
+            --google-blue: #4285F4;
+            --google-red: #EA4335;
+            --google-yellow: #FBBC05;
+            --google-green: #34A853;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+            /* box-shadow: 0px 10px 10px 10px #0000002b; */
+        }
+
+        :-webkit-scrollbar-thumb {
+            background-color: red;
+            border: 4px solid transparent;
+            border-radius: 100px;
+            background-clip: padding-box;
+        }
+
+        :-webkit-scrollbar {
+            width: 16px;
+        }
+
+        /* ul {
+  overflow-y: scroll;
+  margin: 0;
+  padding: 0;
+  width: 350px;
+  max-height: 300px;
+  background-color: #ddd;
+
+  border-radius: 8px;
+} */
+
+        body {
+            background-image: url('desert.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* filter: blur(2px) brightness(0.5); */
+            background-color: #00000067;
+            overflow: hidden;
+            perspective: 800px;
+        }
+
+        i {
+            font-size: 20px;
+            text-align: center;
+            flex-grow: 0;
+            color: var(--text-color);
+        }
+
+        .h {
+            font-weight: 0;
+        }
+
+        body {
+            /* background-color: var(--background-color); */
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            width: 100vw;
+        }
+
+
+        #skybox {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -1;
+      filter: blur(10px); /* Apply blur to the skybox */
+    }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.2);
+            border: 4px solid transparent;
+            border-radius: 8px;
+            background-clip: padding-box;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.4);
+            border: 4px solid transparent;
+            border-radius: 8px;
+            background-clip: padding-box;
+        }
+
+
+        ::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        .container {
+            /* filter: blur(0.7px); */
+            /* background-color: #4a4a4a83;
+            backdrop-filter: blur(20px); */
+            /* background-blend-mode: overlay; */
+            opacity: 1;
+            width: 1200px;
+            height: 650px;
+            /* background-color: var(--background-color); */
+            /* border: 2px solid var(--primary-color); */
+            /* background-image: url('desert.jpg');
+  background-size: cover; 
+  background-repeat: no-repeat; */
+            border-radius: calc(var(--border-radius)*2);
+            display: grid;
+            grid-template-rows: 1fr 20fr;
+            grid-template-columns: 1fr 1.3fr 1fr;
+            gap: var(--gap);
+            padding: var(--gap);
+            overflow: hidden;
+            /* box-shadow: #0fbd8c24 0px 5px 50px 20px; */
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+
+        /* Header Panel */
+        .header {
+            grid-column: 1 / span 3;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+        }
+
+        .header .logo {
+            font-size: var(--font-size);
+            font-weight: bold;
+        }
+
+        .header .profile {
+            display: flex;
+            align-items: center;
+            gap: var(--padding);
+        }
+
+        .header .profile .avatar {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: radial-gradient(circle, orange, red);
+        }
+
+        /* Left Panel */
+        .left-panel {
+            /* opacity: 50%;
+            filter: blur(2px); */
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: var(--gap);
+            perspective: 1000px;
+            /* transform: rotateZ(-1.5deg); */
+        }
+
+        .left-panel .holo {
+            transform: rotateY(25deg);
+
+            z-index: 1;
+            height: 200px;
+
+        }
+
+        .left-panel .date {
+            font-size: var(--font-size);
+        }
+
+        .left-panel .time {
+            font-size: 80px;
+            font-weight: bold;
+        }
+
+        .left-panel .circle {
+            width: 125px;
+            height: 125px;
+            border-radius: 50%;
+            border: 5px solid var(--primary-color);
+            margin-bottom: var(--gap);
+            flex-grow: 0;
+            margin-right: 20px;
+            align-content: center;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+        }
+
+        .left-panel .reminders {
+
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: calc(var(--gap)/2);
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .left-panel .reminders::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.03);
+            border: 4px solid transparent;
+            border-radius: 8px;
+            background-clip: padding-box;
+        }
+
+        .left-panel .reminders::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.06);
+            border: 4px solid transparent;
+            border-radius: 8px;
+            background-clip: padding-box;
+        }
+
+
+        .left-panel .reminders::-webkit-scrollbar {
+            width: 2px;
+        }
+
+        .left-panel button {
+            width: 100%;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: calc(var(--padding));
+            border-radius: calc(var(--border-radius)/2);
+            font-size: calc(var(--font-size)/1.2);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .left-panel .statistics {
+            background-color: var(--secondary-color);
+
+            color: var(--text-color);
+            text-align: center;
+            padding: var(--padding);
+            border-radius: var(--border-radius);
+            font-size: var(--font-size);
+        }
+
+        /* Middle Panel */
+        .middle-panel {
+
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: var(--gap);
+
+
+        }
+
+        .middle-panel .title {
+            font-size: var(--font-size);
+            text-align: center;
+            border-radius: 50px;
+            padding: 20px 20px;
+            height: auto;
+            background-color: #ffffff00;
+            padding: 10px 20px;
+            width: 90%;
+            text-align: center;
+            align-items: center;
+            align-content: center;
+            justify-content: center;
+            justify-items: center;
+        }
+
+        .middle-panel .title:hover {
+            background-color: #ffffff13;
+        }
+
+        .middle-panel .circle-button {
+            width: 50px;
+            height: 50px;
+            background-color: #ffffff23;
+            color: var(--text-color);
+            border: none;
+            /* padding: calc(var(--padding)); */
+            border-radius: calc(var(--border-radius)*2);
+            font-size: calc(var(--font-size)/1.2);
+            cursor: pointer;
+            text-align: centre;
+        }
+
+
+
+        .middle-panel .timer {
+            width: 250px;
+            height: 250px;
+            border-radius: 50%;
+            background-color: var(--secondary-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: var(--big-font-size);
+            color: var(--text-color);
+            font-weight: bold;
+            /* border: 15px solid var(--primary-color); */
+
+            /* background-image: conic-gradient(var(--primary-color) 15%, var(--box-color) 15.1%); */
+            background: linear-gradient(var(--background-color), var(--background-color)) padding-box,
+                conic-gradient(var(--primary-color) 15%, var(--box-color) 15.1%) border-box;
+            border-radius: 50em;
+            border: 15px solid transparent;
+            transition: background-color 1s ease;
+        }
+
+        .middle-panel .start-button {
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            border: none;
+            /* padding: calc(var(--padding)/2) calc(var(--gap)*1); */
+            border-radius: calc(var(--border-radius)*2);
+            font-size: var(--font-size);
+            height: 50px;
+            cursor: pointer;
+            margin-bottom: var(--gap);
+            margin-left: 15px;
+            margin-right: 15px;
+            font-weight: bold;
+
+        }
+
+        .middle-panel button:hover {
+            /* background-color: white; */
+            /* outline: 1px solid white; */
+            border: 2px solid white;
+
+        }
+
+        /* Right Panel */
+        .right-panel {
+            margin-top: 50px;
+            display: flex;
+            flex-direction: column;
+            gap: var(--gap);
+            padding: var(--gap);
+            perspective: 1000px;
+            /* transform: rotateZ(1.5deg); */
+        }
+
+        .right-panel .holo {
+            transform: rotateY(-25deg);
+            z-index: 1;
+            height: 300px;
+
+        }
+
+        .box {
+            /* background-color: var(--box-color); */
+
+            background-color: #00000031;
+            backdrop-filter: blur(10px);
+            background-blend-mode: overlay;
+
+            border-radius: var(--border-radius);
+            /* padding: var(--padding); */
+            height: 100%;
+            position: relative;
+        }
+
+        .box .pane {
+            width: 100%;
+            height: 40px;
+            /* display: flex; */
+            background-color: var(--contrast-color);
+            border-radius: var(--border-radius) var(--border-radius) 0 0;
+            text-align: center;
+            padding: 10px;
+            gap: 10px;
+            align-content: center;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .box .pane button {
+            border-radius: 30px;
+            background-color: #00000030;
+            height: 30px;
+            width: auto;
+            font-size: calc(var(--font-size)/1.7);
+            align-content: center;
+            align-items: center;
+            text-align: center;
+            text-align: justify;
+        }
+
+        .right-panel button {
+            width: 100%;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            border: none;
+            padding: calc(var(--padding));
+            border-radius: calc(var(--border-radius)/2);
+            font-size: calc(var(--font-size)/1.2);
+            cursor: pointer;
+            text-align: left;
+        }
+
+        .box .pane .label {
+            position: absolute;
+            top: var(--padding);
+            left: var(--padding);
+            font-size: var(--font-size);
+            color: var(--text-color);
+        }
+
+
+        .sub-container {
+            width: 100%;
+            /* height: 100%; */
+            display: flex;
+            justify-content: space-between;
+        }
+
+        textarea {
+            width: 100%;
+            height: auto;
+            border-radius: 0 0 var(--border-radius) var(--border-radius);
+            resize: none;
+            /* Allow vertical resizing */
+
+            border: none;
+            color: var(--text-color);
+            padding: 10px;
+
+            resize: none;
+            background-color: #00000000;
+
+            color: var(--text-color);
+            padding: 10px;
+            
+
+        }
+     
+
+        .utilities {
+
+            border-radius: calc(var(--border-radius)/2);
+            height: 80px;
+            width: 80px;
+            background-color: #00000000;
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            text-align: center;
+            justify-items: center;
+            font-size: 10px;
+            flex-shrink: 0;
+
+
+
+
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 4px solid transparent;
+            border-radius: 100px;
+            background-clip: padding-box;
+        }
+
+        textarea::-webkit-scrollbar {
+            width: 16px;
+        }
+
+        .right-panel .sub-container::-webkit-scrollbar-thumb {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 4px solid transparent;
+            border-radius: 50px;
+            background-clip: padding-box;
+        }
+
+        .right-panel .sub-container::-webkit-scrollbar-thumb:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            /* border: 4px solid transparent; */
+            border-radius: 50px;
+            background-clip: padding-box;
+        }
+
+
+        .right-panel .sub-container::-webkit-scrollbar {
+            width: 15px;
+        }
+
+        .utilities:hover {
+            background-color: #ffffff1d;
+
+        }
+
+        .utilities .circle {
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            text-align: center;
+            align-self: center;
+            border-radius: 100px;
+            height: 40px;
+            width: 40px;
+            background-color: #0fbd8c;
+            margin-bottom: 10px;
+
+        }
+
+        .files .circle {
+            align-items: center;
+            justify-content: center;
+            align-content: center;
+            text-align: center;
+            align-self: center;
+            border-radius: 100px;
+            height: 30px;
+            width: 30px;
+            background-color: #0fbd8c;
+
+        }
+
+        .files {
+            width: 100%;
+            height: 58px;
+            display: flex;
+            padding: 10px;
+            gap: 10px;
+            align-items: center;
+            justify-content: space-between;
+            align-content: center;
+            /* text-align: center; */
+            align-self: center;
+            justify-self: center;
+        }
+
+        .files:hover {
+            background-color: #ffffff1d;
+
+        }
+
+        .files .sub-container {
+            justify-self: center;
+            align-items: center;
+            justify-content: space-between;
+            align-content: center;
+            /* text-align: center; */
+            align-self: center;
+            display: block;
+            height: 100%;
+            flex-grow: 1;
+            width: 100%;
+            flex-shrink: 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100px;
+            white-space: nowrap;
+
+            padding: 0px;
+
+        }
+
+
+        .files .sub-container .link {
+            margin-top: 2.5px;
+            color: #ffffff72;
+            display: block;
+            height: auto;
+            flex-grow: 1;
+            flex-shrink: 0;
+            text-overflow: ellipsis;
+            overflow: hidden;
+            width: 100%;
+            font-size: 10px;
+
+            white-space: nowrap;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            gap: 30px;
+        }
+
+        .popup {
+            background-color: var(--box-color);
+            padding: 20px;
+
+            /* border: 1px solid #ccc; */
+            /* Added a border for better visual feedback */
+            border-radius: var(--border-radius);
+            max-width: 800px;
+            /* Increased max-width for better resizing experience */
+            width: 90%;
+            color: var(--text-color);
+            /* Changed text color for better contrast */
+            position: relative;
+
+        }
+
+
+
+        .popup p {
+            font-size: calc(var(--font-size)/1.2);
+            color: #ffffff7e;
+        }
+
+        .popup h2 {
+            font-size: var(--font-size);
+            margin-bottom: 20px;
+        }
+
+        .popup button {
+            margin-top: 20px;
+            background-color: var(--primary-color);
+            border: none;
+            padding: 10px 20px;
+            border-radius: var(--border-radius);
+            cursor: pointer;
+            color: var(--text-color);
+            font-size: calc(var(--font-size)*1);
+        }
+
+        .popup input {
+            height: auto;
+            width: 100%;
+            text-overflow: clip;
+            border-radius: calc(var(--border-radius)/2);
+            resize: none;
+            background-color: var(--box-color);
+            border: 1px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 10px;
+            margin-top: 10px;
+            margin-bottom: 20px;
+
+        }
+
+        .popup textarea {
+            width: 100%;
+
+            height: 225px;
+            border-radius: var(--border-radius);
+            resize: none;
+            background-color: var(--box-color);
+            border: 1px solid var(--primary-color);
+            color: var(--text-color);
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .popup select {
+            width: 100%;
+            margin-top: 10px;
+            background-color: var(--box-color);
+            color: var(--text-color);
+            border: 1px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            padding: 10px;
+        }
+
+
+        .bottom-pane {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background-color: #3f3f3f74;
+            backdrop-filter: blur(30px);
+            background-blend-mode: overlay;
+            transition: height 0.3s ease, opacity 0.3s ease;
+            ;
+            height: 30px;
+            overflow: hidden;
+            z-index: 10000000;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            align-self: center;
+            /* Ensure it's on top */
+            /* opacity: 0.01; */
+            border-top: 0px solid #ffffff7c;
+            /* filter: blur(10px); */
+            perspective: 1000px;
+
+
+        }
+
+        .bottom-pane:hover {
+            border-top: 1px solid #ffffff7c;
+            height: 100px;
+            opacity: 1;
+            filter: blur(0px);
+        }
+
+        .bottom-pane>* {
+            /* Selects only direct children */
+            transition: opacity 0.3s ease;
+            opacity: 0;
+            /* Initial opacity */
+        }
+
+        .bottom-pane:hover>* {
+            /* Targets direct children on hover */
+            opacity: 1;
+        }
+
+        .bottom-pane-content {
+            width: 100%;
+            /* padding: 10px; */
+            /* box-sizing: border-box; */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            align-self: center;
+            /* transform: rotateX(10deg); */
+        }
+
+        .chat-footer {
+            height: 100px;
+            display: flex;
+            width: 50%;
+            display: flex;
+            padding: 0px;
+            /* margin: 10px; */
+            justify-content: center;
+            align-items: center;
+            align-content: center;
+            text-align: center;
+            align-self: center;
+        }
+
+        .chat-footer button {
+            background: #ffffff1c;
+            color: #fff;
+            border: none;
+            /* padding: 15px 0px; */
+            border-radius: 100px;
+            cursor: pointer;
+            font-size: 14px;
+            height: 50px;
+            width: 50px;
+        }
+
+        .chat-footer button:hover {
+            border: 2px solid white;
+        }
+
+
+        .chat-footer input {
+            flex: 1;
+            height: 50px;
+            padding: 10px;
+            padding-left: 15px;
+            border: 1px solid #ffffff2d;
+            /* Thicker border */
+            border-radius: 100px;
+            margin-right: 15px;
+            font-size: var(--font-size);
+            /* Increased font size */
+            font-family: 'Roboto', sans-serif;
+            /* Use the same font */
+            color: #ffffff;
+            /* Dark text color */
+            background-color: rgba(255, 255, 255, 0.1);
+            /* Light background color */
+            transition: border-color 0.3s, box-shadow 0.3s;
+            /* Smooth transition */
+            outline: none;
+            /* transition: all 1s ease; */
+        }
+
+
+        .chat-footer input::placeholder {
+            color: #ffffff74;
+            font-weight: 0;
+        }
+
+        .chat-footer input:hover {
+            outline: none;
+            /* border-color: #ffffff;  */
+            box-shadow: 0 0 15px 5px rgba(255, 255, 255, 0.107);
+        }
+
+
+        .tab {
+            box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            -webkit-box-sizing: border-box;
+            display: none;
+            z-index: 9;
+            text-align: center;
+            /* max-height: 700px;
+    max-width: 1200px; */
+            background-color: #4a4a4a83;
+            backdrop-filter: blur(20px);
+            background-blend-mode: overlay;
+            border: 2px solid #ffffff26;
+            border-radius: 10px;
+            color: #fff;
+            flex-direction: column;
+            position: absolute;
+            overflow: auto;
+            width: 500px;
+            height: 400px;
+            box-shadow: #0000005f 0px 10px 30px 0px;
+
+        }
+
+        .tab-header {
+            padding: 10px;
+            cursor: move;
+            z-index: 10;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            /* Vertically center items */
+            height: auto;
+            /* Remove fixed height */
+
+        }
+
+        .tab-header p {
+            text-align: left;
+            flex-grow: 1;
+            /* Allow p to take available space */
+            white-space: nowrap;
+            /* Prevent text wrapping */
+            overflow: hidden;
+            /* Hide overflowing text */
+            text-overflow: ellipsis;
+            /* Add ellipsis */
+            margin: 0 10px 0 0;
+            /* Adjust margins */
+            font-weight: normal;
+            /* Remove unnecessary font-weight */
+            color: #ffffffab;
+        }
+
+        .tab iframe {
+            -moz-transform: scale(0.5, 0.5);
+            -webkit-transform: scale(0.125, 0.125);
+            -o-transform: scale(0.5, 0.5);
+            -ms-transform: scale(0.5, 0.5);
+            transform: scale(1, 1);
+            -moz-transform-origin: top left;
+            -webkit-transform-origin: top left;
+            -o-transform-origin: top left;
+            -ms-transform-origin: top left;
+            transform-origin: top left;
+        }
+
+        .tab .resizer-right {
+            width: 10px;
+            height: 100%;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            cursor: e-resize;
+        }
+
+        .tab .resizer-bottom {
+            width: 100%;
+            height: 30px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            cursor: n-resize;
+        }
+
+        .tab .resizer-both {
+            width: 10px;
+            height: 30px;
+            position: absolute;
+            right: 0;
+            bottom: 0;
+            cursor: nw-resize;
+        }
+
+        .tab .tab-header button {
+            border: none;
+            background-color: #ffffff1e;
+            border-radius: 100px;
+            margin: 0px;
+            /* Adjust margins for better spacing */
+            display: flex;
+            height: 20px;
+            width: 20px;
+            flex-grow: 0;
+            padding: 0px;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- <div id="skybox"></div> -->
+
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">HOKBAR</div>
+            <div class="profile">
+                <div class="avatar"></div>
+                <span>Chris</span>
+            </div>
+        </div>
+
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="holo">
+                <div style="margin-bottom: 0px;">
+                    <div class="date" id="date">Jan 17 MON</div>
+                    <div class="time" id="time" style="margin-bottom: 10px;">11:37</div>
+                </div>
+                <div class="sub-container">
+                    <div class="circle">
+                        <div class="player"
+                            style="border-radius: 60px; overflow: hidden; z-index: 1; height: 115px; width: 115px;">
+                            <iframe width="115" height="115"
+                                src="https://www.youtube.com/embed/1oDrJba2PSs?si=h66_006F5ZrK4q47&amp;controls=0"
+                                title="" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                        </div>
+                    </div>
+                    <div class="reminders" style="overflow-y: auto; height: 125px; border-radius: 10px;">
+                        <button onclick="">Chinese 30 min</button>
+                        <button>English 15 min</button>
+                        <button>Math 60 min</button>
+                        <button>+ Add new</button>
+                    </div>
+                </div>
+                <div class="box" style="height: 100%;width: 100%;">
+                    <div class="pane" style="display: flex;">
+                        <p style="flex-grow: 1; width: 100%; text-align: left;">Note Area</p>
+                        <button onclick="saveToStorage('noteArea')">Save</button>
+                        <button onclick="clearTextarea('noteArea')">Clear</button>
+                    </div>
+                    <textarea id="noteArea" style="height: 160px;"></textarea><br>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Middle Panel -->
+        <div class="middle-panel">
+            <div id="timerBG"
+                style="border-radius: 30px; height: 100%; background-image: linear-gradient(#0fbd8c00 37%, #0fbd8c60); width: 80%; display: flex; flex-direction: column; justify-content: center; align-items: center; justify-content: space-between; ">
+                <div class="title" onclick="openPopup('timerPopup')" style="margin-bottom: 10px;">
+                    <p style="margin-bottom: 0px; font-size: 30px; width: 95%; height: 70px; text-align: center; align-items: center; align-self: center; align-content: center;"
+                        id="timerTitle">Chinese Language</p>
+                </div>
+                <div class="timer" style="margin: 20px;" id="timerDisplay">1:30</div>
+                <div class="sub-container" style="display: flex; justify-content: center;">
+                    <button class="circle-button" id="circle-button-left" onclick="changetimerid(-1);">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    <button id="timerStart" class="start-button" style="margin-bottom: 40px; width: 150px;"
+                        onclick="startCountdown()">START NOW</button>
+                    <button class="circle-button" id="circle-button-right" onclick="changetimerid(1);">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Right Panel -->
+        <div class="right-panel">
+            <div class="holo">
+                <div class="box" style="height: 140px; margin-bottom: 20px;">
+                    <div class="pane" style="display: flex; width: 100%;">
+                        <p style="flex-grow: 1; width: 100%; text-align: left;">Utilities</p>
+                        <!-- <button onclick="saveToStorage('utilities')">Save</button> -->
+                        <button onclick="openPopup('utilitiesPopup')">Edit</button>
+                    </div>
+                    <div class="sub-container"
+                        style="display: flex;width: 300px; height: auto; overflow-x: auto; scrollbar-width: 1px; padding: 5px 5px 0px 5px;">
+                        <a class="button" href="https://www.physicsandmathstutor.com/past-papers/" target="_blank">
+                            <div class="utilities">
+
+                                <div class="circle">
+                                    <i class="fas fa-file-text"></i>
+                                </div>
+                                Past Paper
+                            </div>
+                        </a>
+
+                        <div class="utilities">
+                            <div class="circle">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            UMS Checker
+                        </div>
+                        <div class="utilities">
+                            <div class="circle">
+                                <i class="fas fa-commenting"></i>
+                            </div>
+                            Poe.com
+                        </div>
+                        <div class="utilities">
+                            <div class="circle">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            Past Paper
+                        </div>
+                        <div class="utilities">
+                            <div class="circle">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+                            Past Paper
+                        </div>
+                    </div>
+                    <!-- <textarea id="utilities"></textarea> -->
+                </div>
+                <div class="box" style="height: 100%; padding-bottom: 0px;">
+                    <div class="pane" style="display: flex;">
+                        <p style="flex-grow: 1; width: 100%; text-align: left;">Ammo</p>
+                        <button onclick="openPopup('notesPopup')">Edit</button>
+                    </div>
+                    <div class="sub-container" id="ammo-container"
+                        style="overflow-y:auto;height: 100%; flex-grow: 1; width: 100%; display: block; margin-bottom: 0px;border-radius: 0px 0px 10px 10px; height: 260px">
+                        <!-- <div class="sub-container" style="height: auto;">
+                        <div class="files">
+                            <div class="circle">
+                                <i class="fas fa-file-word"></i>
+                            </div>
+
+                            <div class="sub-container">
+
+                                <h4>Med Interview Prep</h4>
+                                <div class="link">
+                                    https://docs.google.com/document/d/11o8vSXbH2aGCdsKxTwfBTJfVSF-vN9rZCvtDHlUEC9c/edit?tab=t.0
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="sub-container" style="height: auto;">
+                        <div class="files">
+                            <div class="circle">
+                                <i class="fas fa-microphone"></i>
+                            </div>
+
+                            <div class="sub-container">
+
+                                <h4>Med Interview Prep</h4>
+                                <div class="link">
+                                    https://docs.google.com/document/d/11o8vSXbH2aGCdsKxTwfBTJfVSF-vN9rZCvtDHlUEC9c/edit?tab=t.0
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div> -->
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Popup Overlays -->
+    <div id="timerPopup" class="popup-overlay">
+        <div class="popup">
+            <h2>My Timers</h2>
+            <p style="text-align: left; margin-bottom: 10px;">You can add timers by editing the text, or use the new
+                timer template tool on the right. Make sure to follow the format when editing the text.</p>
+            <textarea id="timers" placeholder="Add or edit timers here..."></textarea>
+            <button onclick="closePopup('timerPopup');saveToStorage('timers');">Save</button>
+        </div>
+        <div class="popup"
+            style="background-color: #00000000; align-items: start; align-content: start; text-align: left;width: 300px;">
+            <!-- <h2>Add New</h2> -->
+            <div>Subject</div>
+            <input class="input" placeholder="Physics"></br>
+            <div>Hours</div>
+            <input class="input" placeholder="60"></br>
+            <div>Minutes</div>
+            <input class="input" placeholder="30"></br>
+            <div>Colour</div>
+            <input class="input" placeholder="#0FBD8C"></br>
+            <button>Add New</button>
+
+        </div>
+    </div>
+
+    <div id="utilitiesPopup" class="popup-overlay">
+        <div class="popup" style="height: 385px;">
+
+            <h2>Edit Utilities</h2>
+            <textarea id="utilities" placeholder="Add or edit utility items..."></textarea>
+            <button onclick="closePopup('utilitiesPopup');saveToStorage('utilities')">Save</button>
+        </div>
+        <div class="popup"
+            style="background-color: #00000000; align-items: start; align-content: start; text-align: left;width: 300px;">
+            <div class="sub-container"
+                style="display: flex; justify-content: left; flex-wrap: wrap; width: 340px; height: 400px; padding: 10px; gap: 20px; overflow-y: auto;">
+
+                <a class="button" href="https://www.physicsandmathstutor.com/past-papers/" target="_blank">
+                    <div class="utilities">
+
+                        <div class="circle">
+                            <i class="fas fa-file-text"></i>
+                        </div>
+                        Past Paper
+                    </div>
+                </a>
+
+                <div class="utilities">
+                    <div class="circle">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    UMS Checker
+                </div>
+                <div class="utilities">
+                    <div class="circle">
+                        <i class="fas fa-commenting"></i>
+                    </div>
+                    Poe.com
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+    <div id="notesPopup" class="popup-overlay">
+        <div class="popup">
+            <h2>Edit Ammo</h2>
+            <p style="text-align: left; margin-bottom: 10px;">You can add ammo by editing the text, or use the new timer
+                template tool on the right. Make sure to follow the format when editing the text.</p>
+            <textarea id="ammo" placeholder="Add or edit ammo here..."></textarea>
+            <button onclick="closePopup('notesPopup');saveToStorage('ammo');loadammo()" id="ammo-button">Save</button>
+        </div>
+        <div class="popup"
+            style="background-color: #00000000; align-items: start; align-content: start; text-align: left;width: 300px;">
+            <!-- <h2>Add New</h2> -->
+            <div>Ammo Name</div>
+            <input class="input" placeholder="Chemistry Past Paper"></br>
+            <div>Link</div>
+            <input type="url" class="input" placeholder="www.google.com"></br>
+            <div>Type</div>
+            <select name="notes-icon" id="notes-icon" style="margin-bottom: 20px; border-radius: 7.5px;">
+                <option value="fas fa-file-word">Word</option>
+                <option value="fas fa-file-excel">Sheets</option>
+                <option value="fas fa-file-powerpoint">Slides</option>
+                <option value="fas file-text">Document</option>
+                <option value="fas fa-book">Learning</option>
+                <option value="fas fa-user">Personal</option>
+                <option value="fas fa-heart">Heart</option>
+                <option value="fas fa-star">Star</option>
+            </select>
+
+            <div>Colour</div>
+            <input class="input" placeholder="#0FBD8C"></br>
+            <button>Add New</button>
+
+        </div>
+    </div>
+
+
+    <div id="LearnPopup" class="popup-overlay">
+        <div class="popup">
+            <h2></h2>
+            <p style="text-align: left; margin-bottom: 10px;">You can add ammo by editing the text, or use the new timer
+                template tool on the right. Make sure to follow the format when editing the text.</p>
+            <textarea id="ammo" placeholder="Add or edit ammo here..."></textarea>
+            <button onclick="closePopup('notesPopup');saveToStorage('ammo');loadammo()" id="ammo-button">Save</button>
+        </div>
+
+    </div>
+    <div class="bottom-pane" id="bottom-pane">
+        <div class="bottom-pane-content">
+            <div class="chat-footer">
+                <input type="text" id="user-input" placeholder="Physics Unit 5 June 2022 QP"
+                    onkeydown="searchtyping(this)">
+                <button id="searchButton" onclick="search()">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- <div class="tab">
+        <div class="tab-header">Click here to move</div>
+        <p>Move</p>
+        <p>this</p>
+        <p>DIV</p>
+      </div> -->
+
+
+
+
+    <script>
+
+
+        const googleColors = [
+            '--google-blue',
+            '--google-red',
+            '--google-yellow',
+            '--google-green'
+        ];
+        let colorIndex = 0;
+
+        let timerid = 1;
+        let timertotal = 1;
+        let timertime = [];
+        let timersubject = [];
+        let timercolor = [];
+        let timerpaused = false;
+
+
+        let timertimemax = [];
+        const centerX = window.innerWidth / 2;
+        const centerY = window.innerHeight / 2;
+
+        // Update date and time dynamically
+        function updateTime() {
+            const now = new Date();
+            document.getElementById("date").textContent = now.toDateString();
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            document.getElementById("time").textContent = `${hours}:${minutes}`;
+        }
+        setInterval(updateTime, 2000);
+        let countdownInterval;
+        let countdownTime = 0;
+        let timepercent = 0;
+
+        // Open and close popup
+        function openPopup(popupId) {
+            document.getElementById(popupId).style.display = "flex";
+        }
+
+        function closePopup(popupId) {
+            document.getElementById(popupId).style.display = "none";
+        }
+
+        function closeTab(button) {
+            const tab = button.closest('.tab');
+            if (tab) {
+                tab.style.display = 'none';
+                tab.remove();
+            }
+        }
+        // Save textarea content to local storage
+        function saveToStorage(id) {
+            const value = document.getElementById(id).value;
+            localStorage.setItem(id, value);
+            // alert(`Saved ${id} to local storage.`);
+            initialize();
+        }
+
+        // Clear textarea content and local storage
+        function clearTextarea(id) {
+            document.getElementById(id).value = "";
+            localStorage.removeItem(id);
+        }
+
+        // Load textarea content from local storage on page load
+        function loadFromStorage(id) {
+            const value = localStorage.getItem(id);
+            if (value) {
+                document.getElementById(id).value = value;
+            }
+        }
+
+        // Initialize all areas on page load
+        document.addEventListener("DOMContentLoaded", () => {
+
+            initialize();
+
+
+        });
+
+        function initialize() {
+
+            timerid = 1;
+            timertotal = 1;
+            timertime = [];
+            timersubject = [];
+            timercolor = [];
+            timerpaused = false;
+
+            timertimemax = [];
+
+            const areas = ["noteArea", "timers", "utilities", "ammo"];
+            areas.forEach(loadFromStorage);
+            updateTime(); // Ensure time is updated on load
+            loadammo();
+
+
+
+            let counter = 0;
+
+            const input = document.getElementById('timers').value;
+
+            // Split the input into groups based on double line breaks
+            const groups = input.split('\n\n').map(group => group.trim()).filter(group => group);
+
+            groups.forEach(group => {
+                // Split each group into lines
+                const lines = group.split('\n');
+                if (lines.length >= 4) {
+                    const subject = lines[0];
+                    const hour = lines[1];
+                    const minute = lines[2];
+                    const bgColor = lines[3];
+
+                    timersubject.push(subject);
+                    timertime.push(parseInt(hour) * 60 + parseInt(minute));
+                    timertimemax.push(parseInt(hour) * 60 + parseInt(minute));
+                    timercolor.push(bgColor);
+                    counter++;
+
+                }
+            });
+
+            timertotal = counter;
+            // alert(`Done. Total timers: ${timertotal}`);
+
+            renewtimer(1);
+        }
+
+        // Function to handle the generation of elements
+        function loadammo() {
+            const input = document.getElementById('ammo').value;
+            const container = document.getElementById('ammo-container');
+
+            // Clear the container first
+            container.innerHTML = '';
+
+            // Split the input into groups based on double line breaks
+            const groups = input.split('\n\n').map(group => group.trim()).filter(group => group);
+
+            groups.forEach(group => {
+                // Split each group into lines
+                const lines = group.split('\n');
+                if (lines.length >= 4) {
+                    const title = lines[0];
+                    const link = lines[1];
+                    const iconClass = lines[2];
+                    const bgColor = lines[3];
+
+                    // Create the group structure
+                    const subContainer = document.createElement('div');
+                    subContainer.className = 'sub-container';
+
+
+                    const filesDiv = document.createElement('div');
+                    filesDiv.className = 'files';
+
+                    const circleDiv = document.createElement('div');
+                    circleDiv.className = 'circle';
+                    circleDiv.style.backgroundColor = bgColor;
+
+                    const icon = document.createElement('i');
+                    icon.className = iconClass;
+                    circleDiv.appendChild(icon);
+
+                    const detailsContainer = document.createElement('div');
+                    detailsContainer.className = 'sub-container';
+
+                    const titleElement = document.createElement('h4');
+                    titleElement.textContent = title;
+
+                    const linkElement = document.createElement('div');
+                    linkElement.className = 'link';
+                    linkElement.textContent = link;
+
+                    // Append details to the details container
+                    detailsContainer.appendChild(titleElement);
+                    detailsContainer.appendChild(linkElement);
+
+                    // Append circle and details to the files div
+                    filesDiv.appendChild(circleDiv);
+                    circleDiv.appendChild(icon);
+                    filesDiv.appendChild(detailsContainer);
+
+                    // Append files div to the sub-container
+                    subContainer.appendChild(filesDiv);
+
+                    // Append sub-container to the main container
+                    container.appendChild(subContainer);
+                }
+            });
+        };
+
+        function changetimerid(value) {
+            if (value == -1) {
+                if (timerid == 1) {
+                    timerid = timertotal;
+
+                } else {
+                    timerid--;
+                }
+
+            }
+            if (value == 1) {
+                if (timerid == timertotal) {
+                    timerid = 1;
+
+                } else {
+                    timerid++;
+                }
+
+            }
+            setnewtimer(timerid);
+
+
+
+        }
+
+        function isValidColor(color) {
+            // Basic check, can be improved for more robust validation
+            return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$|^(rgb|hsl)a?\(\s*(\d{1,3})\s*,\s*(\d{1,3})\s*,\s*(\d{1,3})\s*(?:,\s*(\d+(?:\.\d+)?)\s*)?\)$/.test(color);
+        }
+
+        function setnewtimer() {
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerBG = document.getElementById('timerBG');
+            const timerTitle = document.getElementById('timerTitle');
+            const timerStart = document.getElementById('timerStart')
+
+            const input = document.getElementById('timers').value;
+
+            timerpaused = false; // Set the flag to false to pause the timer
+            timerStart.textContent = "START NOW";
+            timerStart.style.backgroundColor = `${timercolor[timerid - 1]}`;
+            timerStart.style.color = "white";
+
+            const circlebuttonleft = document.getElementById("circle-button-left");
+            const circlebuttonright = document.getElementById("circle-button-right");
+
+            circlebuttonleft.style.display = "block";
+            circlebuttonright.style.display = "block";
+
+
+            timerTitle.textContent = timersubject[timerid - 1];
+
+            countdownTime = (timertime[timerid - 1] * 60);
+
+            timepercent = (countdownTime / 60 / timertimemax[timerid - 1] * 100);
+            timepercent = timepercent.toString() + "%";
+
+            const hour = Math.floor(countdownTime / 3600);
+            const minutes = Math.floor((countdownTime / 60) % 60);
+            const seconds = countdownTime % 60;
+
+            timerDisplay.textContent = `${hour}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+
+            timerBG.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0) 37%, ${timercolor[timerid - 1]} 150%)`;
+
+            timerDisplay.style.background = `linear-gradient(var(--background-color), var(--background-color)) padding-box, conic-gradient(${timercolor[timerid - 1]} ${timepercent}, var(--box-color) ${timepercent}) border-box`;
+        }
+
+        function renewtimer(id) {
+
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerBG = document.getElementById('timerBG');
+            const timerTitle = document.getElementById('timerTitle');
+            const timerStart = document.getElementById('timerStart')
+
+            const input = document.getElementById('timers').value;
+
+            timerpaused = false; // Set the flag to false to pause the timer
+            timerStart.textContent = "START NOW";
+            timerStart.style.backgroundColor = `${timercolor[timerid - 1]}`;
+            timerStart.style.color = "white";
+
+            const circlebuttonleft = document.getElementById("circle-button-left");
+            const circlebuttonright = document.getElementById("circle-button-right");
+
+            circlebuttonleft.style.display = "block";
+            circlebuttonright.style.display = "block";
+
+
+            // Split the input into groups based on double line breaks
+            const groups = input.split('\n\n').map(group => group.trim()).filter(group => group);
+
+            let counter = 1;
+
+            groups.forEach(group => {
+                const lines = group.split('\n');
+                if (lines.length >= 4) {
+                    const subject = lines[0]; // Trim whitespace
+                    const hour = lines[1];    // Trim whitespace
+                    const minute = lines[2];  // Trim whitespace
+                    let bgColor = lines[3];   // Trim whitespace
+
+                    bgColor = bgColor.trim();
+
+                    if (counter == id) {
+                        timerTitle.textContent = subject;
+                        timerDisplay.textContent = `${hour}:${minute.toString().padStart(2, "0")}:00`;
+                        timerBG.style.backgroundImage = `linear-gradient(rgba(0, 0, 0, 0) 37%, ${bgColor} 150%)`;
+                        timerStart.style.backgroundColor = bgColor;
+                        timerDisplay.style.background = `linear-gradient(var(--background-color), var(--background-color)) padding-box,
+                        conic-gradient(${bgColor} 100%, var(--box-color) 100%) border-box`;
+
+                    }
+                    counter++;
+                }
+            });
+        };
+
+        function startCountdown() {
+            if (countdownInterval) clearInterval(countdownInterval);
+            // countdownTime = parseInt(prompt("Enter countdown time in seconds"), 10);
+
+
+            const timerDisplay = document.getElementById("timerDisplay");
+
+            const timerStart = document.getElementById("timerStart");
+
+            const circlebuttonleft = document.getElementById("circle-button-left");
+            const circlebuttonright = document.getElementById("circle-button-right");
+
+            if (timerpaused == false) {
+
+
+
+                if (timerStart.textContent == "START NOW") {
+                    countdownTime = (timertime[timerid - 1] * 60);
+                    circlebuttonleft.style.display = "none";
+                    circlebuttonright.style.display = "none";
+                }
+
+                timerStart.textContent = "PAUSE";
+                timerStart.style.backgroundColor = "white";
+                timerStart.style.color = `${timercolor[timerid - 1]}`;
+                timerpaused = true; // Set the flag to true when starting the timer
+
+                countdownInterval = setInterval(() => {
+                    if (timerpaused) { //Check the flag before proceeding
+                        if (countdownTime <= 0) {
+                            clearInterval(countdownInterval);
+                            timerpaused = false; // Set the flag to false when timer ends
+                            alert("Time is up!");
+                            renewtimer(timerid);
+                        } else {
+                            countdownTime--;
+                            timepercent = (countdownTime / 60 / timertimemax[timerid - 1] * 100);
+                            timepercent = timepercent.toString() + "%";
+
+                            const hour = Math.floor(countdownTime / 3600);
+                            const minutes = Math.floor((countdownTime / 60) % 60);
+                            const seconds = countdownTime % 60;
+
+                            timerDisplay.textContent = `${hour}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
+                            timerDisplay.style.background = `linear-gradient(var(--background-color), var(--background-color)) padding-box, conic-gradient(${timercolor[timerid - 1]} ${timepercent}, var(--box-color) ${timepercent}) border-box`;
+                        }
+                    }
+                }, 1000);
+
+            } else if (timerStart.textContent == "PAUSE") {
+                timerpaused = false; // Set the flag to false to pause the timer
+                timerStart.textContent = "RESUME";
+                timerStart.style.backgroundColor = `${timercolor[timerid - 1]}`;
+                timerStart.style.color = "white";
+                timertime[timerid - 1] = countdownTime / 60;
+                circlebuttonleft.style.display = "block";
+                circlebuttonright.style.display = "block";
+
+
+            } else if (timerStart.textContent == "RESUME") {
+                timerpaused = true; // Set the flag to true to resume the timer
+                timerStart.textContent = "PAUSE";
+
+            }
+
+
+
+        }
+
+        const userInput = document.getElementById('user-input');
+
+
+
+        let currentZIndex = 100; // Track the highest z-index
+
+        // Function to create a new tab
+        function createNewTab(url) {
+            const tabContainer = document.createElement('div');
+            tabContainer.classList.add('tab');
+            tabContainer.style.display = 'block'; // Make it visible
+            tabContainer.style.zIndex = ++currentZIndex; // Bring to top
+            const rect = tabContainer.getBoundingClientRect(); // Get the tab's dimensions
+            const top = window.innerHeight / 2 - rect.height / 2;
+            const left = window.innerWidth / 2 - rect.width / 2;
+
+            tabContainer.style.top = `${top - tabContainer.height / 2}px`;
+            tabContainer.style.left = `${left - tabContainer.width / 2}px`;
+
+            const uniqueId = `tab-${Date.now()}`; // Generate a unique ID
+            tabContainer.id = uniqueId;
+
+            // Tab header
+            const tabHeader = document.createElement('div');
+            tabHeader.classList.add('tab-header');
+            tabHeader.innerHTML = `
+        <p>${url}</p>
+        <button id='pinbutton' onclick="pinTab('${uniqueId}')" style="margin-left: 5px; width: 20px; flex-grow: 0; color: white">
+            <i class="fas fa-cube" style="font-size: 10px; color: #ffffff80"></i>
+            </button>
+            <button id='lockbutton' onclick="togglelock('${uniqueId}')" style="margin-left: 5px; width: 20px; flex-grow: 0; color: white">
+            <i class="fas fa-lock" style="font-size: 10px; color: white"></i>
+            </button>
+        <button id='snapbutton' onclick="snappingTab('${uniqueId}')" style="margin-left: 5px; width: 20px; flex-grow: 0; color: white">
+            <i class="fas fa-columns" style="font-size: 10px; color: #ffffff80"></i>
+            </button>
+            <button id='maximizebutton' onclick="maximizeTab('${uniqueId}')" style="margin-left: 5px; width: 20px; flex-grow: 0; color: white">
+            <i class="fas fa-external-link" style="font-size: 10px; color: #ffffff80"></i>
+            </button>
+        <button id='closebutton' onclick="closeTab('${uniqueId}')" style="margin-left: 5px; width: 20px; flex-grow: 0; color: white">
+            <i class="fas fa-times" style="font-size: 10px; color: #ffffff80"></i>
+            </button>
+    `;
+            tabContainer.appendChild(tabHeader);
+
+
+
+
+            if (url == 'Camera') {
+                let video = document.createElement('video');
+
+                video.id = 'video';
+
+                // Set the autoplay attribute.  Note that autoplay is often unreliable due to browser restrictions.
+                video.autoplay = true;
+
+                video.style.transform = 'scaleX(-1)';
+
+
+                if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+                    navigator.mediaDevices.getUserMedia({ video: true })
+                        .then(function (stream) {
+                            video.srcObject = stream;
+                            console.log('camera');
+                        })
+                        .catch(function (err) {
+                            console.error("An error occurred: " + err);
+                            // Handle the error appropriately, e.g., display an error message to the user.
+                            const errorMessage = document.createElement('p');
+                            errorMessage.textContent = "Camera access denied. Please check your browser settings.";
+                            document.body.appendChild(errorMessage);
+                        });
+                } else {
+                    console.error("getUserMedia is not supported by your browser.");
+                    // Handle the case where getUserMedia is not supported.
+                    const errorMessage = document.createElement('p');
+                    errorMessage.textContent = "Your browser does not support webcam access.";
+                    document.body.appendChild(errorMessage);
+
+                }
+                tabContainer.style.overflowY = 'hidden';
+                video.style.width = '100%';
+                video.style.minWidth = '100%';
+
+                // video.style.height = 'calc(100% - 50px)';
+
+                video.style.border = '0px';
+                tabContainer.appendChild(video);
+            }
+
+            else {
+                let iframe = document.createElement('iframe');
+                iframe.src = url;
+                iframe.style.width = 'calc(100% - 0px)';
+                iframe.style.height = 'calc(100% - 50px)';
+
+                iframe.style.border = '0px';
+
+
+                // iframe.onload = function () {
+                //     if (iframe.contents().find("html body").children() > 0) {
+                //         showErrorPage(tabContainer, url, "The website refused the connection.")
+                //     }
+                // };
+
+                // iframe.onerror = function () {
+                //     showErrorPage(tabContainer, url, "The website refused the connection.")
+
+                // };
+
+
+                tabContainer.appendChild(iframe);
+            }
+
+
+            function showErrorPage(container, url, message) {
+                // Find the iframe within the container
+                const iframe = container.querySelector('iframe');
+                if (iframe) {
+                    container.removeChild(iframe); // Remove only the iframe
+                }
+
+                const errorDiv = document.createElement('div');
+                errorDiv.style.textAlign = 'center';
+                errorDiv.style.alignSelf = 'center';
+                errorDiv.style.padding = '20px';
+                errorDiv.style.color = '#ffffff77';
+                errorDiv.style.justifyContent = 'center';
+                errorDiv.innerHTML = `
+    <i class="fas fa-exclamation-circle" style="font-size: 100px; color: #ffffff77; margin: 20px 0px"></i>
+        <h1 style="margin: 20px">Error Loading URL</h1>
+        <p>There was an error loading the URL: ${url}</p>
+        <p>${message}</p>
+    `;
+                container.appendChild(errorDiv); // Add the error message
+            }
+
+
+            // iframe.style.border = '0px';
+            // tabContainer.appendChild(iframe);
+
+            // Resizers
+            const resizerRight = document.createElement('div');
+            resizerRight.className = 'resizer-right';
+            tabContainer.appendChild(resizerRight);
+
+            const resizerBottom = document.createElement('div');
+            resizerBottom.className = 'resizer-bottom';
+            tabContainer.appendChild(resizerBottom);
+
+            const resizerBoth = document.createElement('div');
+            resizerBoth.className = 'resizer-both';
+            tabContainer.appendChild(resizerBoth);
+
+            document.body.appendChild(tabContainer);
+
+            // Initialize drag and resize functionality for the new tab
+            initDragElement(tabContainer);
+            initResizeElement(tabContainer);
+            // applyBlurBasedOnZIndex();
+
+
+        }
+
+        function minMagnitude(a, b) {
+            const absA = Math.abs(a);
+            const absB = Math.abs(b);
+            if (absA <= absB) {
+                return a;
+            } else {
+                return b;
+            }
+        }
+
+        function addholo(tab) {
+            let rect = tab.getBoundingClientRect();
+            let tabCenterX = rect.left + rect.width / 2;
+            let tabCenterY = rect.top + rect.height / 2;
+
+
+            let distanceX = (tabCenterX - centerX) / 30; // Scale factor adjusts sensitivity
+            let distanceY = (tabCenterY - centerY) * 0; // Scale factor adjusts sensitivity
+
+
+
+
+            tab.style.transform = `rotateY(${minMagnitude(65 * -distanceX / Math.abs(distanceX), -distanceX)}deg) rotateZ(${0}deg) rotateX(${minMagnitude(45 * distanceY / Math.abs(distanceY), distanceY)}deg)`;
+            // tab.style.transform = `rotateY(${-distanceX}deg) rotateZ(${0}deg) rotateX(${distanceY}deg)`;
+
+        }
+        // Initialize dragging for a specific element
+        function initDragElement(tab) {
+
+
+
+            addholo(tab);
+            let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+
+            const header = tab.querySelector('.tab-header');
+
+            header.onmousedown = function (e) {
+                e.preventDefault();
+                tab.style.zIndex = ++currentZIndex; // Bring to top
+                // applyBlurBasedOnZIndex();
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                tab.onmouseup = closeDragElement;
+                // tab.onmouseout = closeDragElement;
+
+
+                // document.onmouseout = closeDragElement;
+                document.onmousemove = elementDrag;
+                // document.addEventListener('keydown', function (event) {
+                //     if (event.key === 'ArrowLeft') {
+
+                //         applySnapping(tab, 'left');
+                //         closeDragElement();
+                //         console.log('left');
+                //     } else if (event.key === 'ArrowRight') {
+
+                //         applySnapping(tab, 'right');
+                //         closeDragElement();
+
+                //     }
+                // });
+            };
+
+            function elementDrag(e) {
+                e.preventDefault();
+                pos1 = pos3 - e.clientX;
+                pos2 = pos4 - e.clientY;
+                pos3 = e.clientX;
+                pos4 = e.clientY;
+                tab.style.top = (tab.offsetTop - pos2) + "px";
+                tab.style.left = (tab.offsetLeft - pos1) + "px";
+                tab.style.borderRadius = '10px';
+
+                addholo(tab);
+
+            }
+
+            function closeDragElement() {
+                onmouseup = null;
+                document.onmousemove = null;
+
+                const icon = tab.querySelector('.tab-header #lockbutton i')
+
+
+
+                if (isElementNear(tab, 'center')) {
+
+                    applySnapping(tab, 'center');
+
+                }
+
+                else if (icon.style.color == 'white') {
+
+                    if (isElementNear(tab, 'left')) { //1
+
+                        applySnapping(tab, 'left');
+
+                    } else if (isElementNear(tab, 'right')) {
+
+                        applySnapping(tab, 'right');
+
+                    }
+                    else if (isElementNear(tab, 'top-left')) { //2
+
+                        applySnapping(tab, 'top-left');
+
+                    } else if (isElementNear(tab, 'edge-left')) {
+
+                        applySnapping(tab, 'edge-left');
+
+                    } else if (isElementNear(tab, 'bottom-left')) {
+
+                        applySnapping(tab, 'bottom-left');
+
+                    } else if (isElementNear(tab, 'top-right')) { //3
+
+                        applySnapping(tab, 'top-right');
+
+                    } else if (isElementNear(tab, 'edge-right')) {
+
+                        applySnapping(tab, 'edge-right');
+
+                    } else if (isElementNear(tab, 'bottom-right')) {
+
+                        applySnapping(tab, 'bottom-right');
+
+                    } else if (isElementNear(tab, 'top-center')) {
+
+                        applySnapping(tab, 'top-center');
+
+                    } else if (isElementNear(tab, 'bottom-center')) {
+
+                        applySnapping(tab, 'bottom-center');
+
+                    } else if (isElementNear(tab, 'up-left')) { //Ups
+
+                        applySnapping(tab, 'up-left');
+
+                    } else if (isElementNear(tab, 'down-left')) {
+
+                        applySnapping(tab, 'down-left');
+
+                    } else if (isElementNear(tab, 'up-right')) {
+
+                        applySnapping(tab, 'up-right');
+
+                    } else if (isElementNear(tab, 'down-right')) {
+
+                        applySnapping(tab, 'down-right');
+
+                    }
+                }
+                // else if (isElementNear(tab, 'left')) {
+
+                //     applySnapping(tab, 'left');
+
+                // } else if (isElementNear(tab, 'right')) {
+
+                //     applySnapping(tab, 'right');
+
+                // } 
+
+
+            }
+        }
+
+        // Initialize resizing for a specific element
+        function initResizeElement(tab) {
+            const resizers = tab.querySelectorAll('.resizer-right, .resizer-bottom, .resizer-both');
+            let startX, startY, startWidth, startHeight;
+
+            resizers.forEach(resizer => {
+                resizer.onmousedown = function (e) {
+                    tab.style.zIndex = ++currentZIndex;
+                    // applyBlurBasedOnZIndex();
+                    e.preventDefault();
+                    startX = e.clientX;
+                    startY = e.clientY;
+                    startWidth = parseInt(window.getComputedStyle(tab).width, 10);
+                    startHeight = parseInt(window.getComputedStyle(tab).height, 10);
+                    document.onmouseup = stopResize;
+                    document.onmousemove = resizeElement;
+                };
+
+                function resizeElement(e) {
+                    if (resizer.classList.contains('resizer-right')) {
+                        tab.style.width = (startWidth + e.clientX - startX) + "px";
+                    } else if (resizer.classList.contains('resizer-bottom')) {
+                        tab.style.height = (startHeight + e.clientY - startY) + "px";
+                    } else if (resizer.classList.contains('resizer-both')) {
+                        tab.style.width = (startWidth + e.clientX - startX) + "px";
+                        tab.style.height = (startHeight + e.clientY - startY) + "px";
+                    }
+                    tab.style.borderRadius = '10px';
+                    addholo(tab);
+
+
+                }
+
+                function stopResize() {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+            });
+        }
+
+        // Close a tab
+        function closeTab(tabId) {
+            const tab = document.getElementById(tabId);
+            if (tab) {
+                tab.remove();
+                // applyBlurBasedOnZIndex();
+            }
+        }
+
+        function lockTab(tabId) {
+            const tab = document.getElementById(tabId);
+
+
+        }
+
+        function togglelock(tabId) {
+            const tab = document.getElementById(tabId);
+            const icon = tab.querySelector('.tab-header #lockbutton i'); //or .fa-unlock if it's already unlocked
+
+            if (icon.style.color == 'rgba(255, 255, 255, 0.5)') {
+                icon.style.color = 'white';
+                console.log('tabId');
+            } else {
+                icon.style.color = 'rgba(255, 255, 255, 0.5)';
+                console.log('tabId');
+                console.log('tabId');
+                console.log(icon.style.color);
+            }
+        }
+
+        function pinTab(tabId) {
+            const tab = document.getElementById(tabId);
+
+            tab.style.transition = "transform 0.3s ease";
+
+            tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+            setTimeout(() => {
+                tab.style.transition = '';
+
+            }, 300); // Slightly longer than the 0.5s transition
+        }
+        function snappingTab(tabId) {
+            const tab = document.getElementById(tabId);
+
+            // tab.style.transition = "transform 0.3s ease";
+
+            // tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+            // setTimeout(() => {
+            //     tab.style.transition = '';
+
+            // }, 500); // Slightly longer than the 0.5s transition
+
+            const screenCenterX = window.innerWidth / 2;
+            const screenCenterY = window.innerHeight / 2;
+
+            // Get element dimensions and position
+            const elementRect = tab.getBoundingClientRect();
+            const elementWidth = elementRect.width;
+            const elementHeight = elementRect.height;
+            const elementCenterX = elementRect.left + elementWidth / 2;
+            const elementCenterY = elementRect.top + elementHeight / 2;
+
+            if (elementCenterX - screenCenterX > 0) {
+                applySnapping(tab, 'right');
+                console.log('right');
+            } else if (elementCenterX - screenCenterX < 0) {
+                applySnapping(tab, 'left');
+            }
+
+
+        }
+
+        function maximizeTab(tabId) {
+            const tab = document.getElementById(tabId);
+
+            tab.style.transition = "all 0.3s ease";
+
+            tab.style.width = `${window.innerWidth * 0.9}px`;
+            tab.style.height = `${window.innerHeight * 0.9}px`;
+
+            const top = window.innerHeight * 0.05;
+            const left = window.innerWidth * 0.05;
+
+            tab.style.top = `${top}px`;
+            tab.style.left = `${left}px`;
+
+            tab.style.borderRadius = '10px';
+
+
+
+            tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+
+
+            // // Event listener for the transitionend event
+            // tab.addEventListener('transitionend', function transitionEndHandler(event) {
+            //     // Check if the event is for the transform property.  This is important if other transitions are applied to the element.
+            //     if (event.propertyName === 'width') {
+            //         // Remove the transition property and the transitioning class
+            //         tab.style.transition = '';
+            //         tab.classList.remove('transitioning');
+            //         // Remove the event listener to prevent memory leaks and multiple executions
+            //         tab.removeEventListener('transitionend', transitionEndHandler);
+            //     }
+            // });
+
+            setTimeout(() => {
+                tab.style.transition = '';
+            }, 300); // Slightly longer than the 0.5s transition
+        }
+
+
+        // Event listener for the search button
+        // document.getElementById('searchButton').addEventListener('click', () => {
+        //     const userInput = document.getElementById('user-input').value;
+        //     if (userInput) {
+        //         createNewTab(userInput);
+        //     }
+        // });
+
+        function search() {
+            const chatInput = document.getElementById('user-input');
+            chatInput.style.boxShadow = "0 0 15px 5px rgba(255, 255, 255, 0.107)";
+            chatInput.style.border = "1px solid #ffffff2d";
+
+
+            let userInput = chatInput.value.trim(); // Trim whitespace
+
+            chatInput.value = ''; // Clear the input field
+
+            if (userInput) {
+                // if (!/^https?:\/\//i.test(userInput)) {
+                //     userInput = 'https://' + userInput;
+                // }
+
+                // createNewTab(userInput);
+                advancedSearch(userInput);
+            }
+        }
+
+        function snapToGrid(value) {
+            return Math.round(value / 50) * 50;
+        }
+
+
+
+        function applySnapping(tab, type) {
+
+            tab.style.transition = "all 0.3s ease";
+            let rect = tab.getBoundingClientRect();
+            let tabCenterX = rect.left + rect.width / 2;
+            let tabCenterY = rect.top + rect.height / 2;
+
+            if (type == 'center') {
+                const top = window.innerHeight / 2 - rect.height / 2;
+                const left = window.innerWidth / 2 - rect.width / 2;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                tab.style.borderRadius = '10px';
+                tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+
+            } else if (type == 'left') {
+
+                tab.style.width = `${window.innerWidth * 0.45}px`;
+                tab.style.height = `${window.innerHeight * 0.9}px`;
+
+                const top = window.innerHeight * 0.05;
+                const left = window.innerWidth * 0.05;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                tab.style.borderRadius = '10px 0px 0px 10px';
+                tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+
+            } else if (type == 'right') {
+
+
+                tab.style.width = `${window.innerWidth * 0.45}px`;
+                tab.style.height = `${window.innerHeight * 0.9}px`;
+
+                const top = window.innerHeight * 0.05;
+                const left = window.innerWidth * 0.5;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                tab.style.borderRadius = '0px 10px 10px 0px';
+                tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+
+            } else if (type == 'top-left') { //lefts
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.15}px`;
+                tab.style.height = `${window.innerHeight * 0.25}px`;
+
+                const top = window.innerHeight * 0.075;
+                const left = window.innerWidth * -0.05;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+
+            } else if (type == 'edge-left') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.15}px`;
+                tab.style.height = `${window.innerHeight * 0.25}px`;
+
+                const top = window.innerHeight * 0.375;
+                const left = window.innerWidth * -0.05;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+
+            } else if (type == 'bottom-left') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.15}px`;
+                tab.style.height = `${window.innerHeight * 0.25}px`;
+
+                const top = window.innerHeight * 0.675;
+                const left = window.innerWidth * -0.05;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+
+            } else if (type == 'top-right') { //rights
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.15}px`;
+                tab.style.height = `${window.innerHeight * 0.25}px`;
+
+                const top = window.innerHeight * 0.075;
+                const left = window.innerWidth * 0.9;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+
+            } else if (type == 'edge-right') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.15}px`;
+                tab.style.height = `${window.innerHeight * 0.25}px`;
+
+                const top = window.innerHeight * 0.375;
+                const left = window.innerWidth * 0.9;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+
+            } else if (type == 'bottom-right') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.15}px`;
+                tab.style.height = `${window.innerHeight * 0.25}px`;
+
+                const top = window.innerHeight * 0.675;
+                const left = window.innerWidth * 0.9;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+
+            } else if (type == 'top-center' || type == 'bottom-center') {
+
+
+
+                tab.style.width = `${window.innerWidth * 0.9}px`;
+                tab.style.height = `${window.innerHeight * 0.9}px`;
+
+                const top = window.innerHeight * 0.05;
+                const left = window.innerWidth * 0.05;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                tab.style.transform = 'rotateX(0deg) rotateY(0deg) rotateZ(0deg)';
+
+            } else if (type == 'up-left') { //ups
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.3}px`;
+                tab.style.height = `${window.innerHeight * 0.4}px`;
+
+                const top = window.innerHeight * 0.1;
+                const left = window.innerWidth * 0.1;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                console.log('upleft');
+
+            } else if (type == 'down-left') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.3}px`;
+                tab.style.height = `${window.innerHeight * 0.4}px`;
+
+                const top = window.innerHeight * 0.5;
+                const left = window.innerWidth * 0.1;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                console.log('downleft');
+
+            } else if (type == 'up-right') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.3}px`;
+                tab.style.height = `${window.innerHeight * 0.4}px`;
+
+                const top = window.innerHeight * 0.1;
+                const left = window.innerWidth * 0.6;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                console.log('up-right');
+
+            } else if (type == 'down-right') {
+
+                const rect = tab.getBoundingClientRect();
+
+                tab.style.width = `${window.innerWidth * 0.3}px`;
+                tab.style.height = `${window.innerHeight * 0.4}px`;
+
+                const top = window.innerHeight * 0.5;
+                const left = window.innerWidth * 0.6;
+
+                tab.style.top = `${top}px`;
+                tab.style.left = `${left}px`;
+                console.log('down-right');
+            }
+
+
+
+
+
+            setTimeout(() => {
+                tab.style.transition = '';
+
+
+            }, 300);
+
+        }
+
+        function openfile(event) {
+            // Find the closest parent with class 'sub-container'
+            const subContainer = event.target.closest('.sub-container');
+
+            // Check if a sub-container was found
+            if (subContainer) {
+                // Get the link element within the sub-container
+                const linkElement = subContainer.querySelector('.link');
+
+                // Check if a link element was found
+                if (linkElement) {
+                    const url = linkElement.textContent;
+                    createNewTab(url);
+                } else {
+                    console.error("Link element not found within sub-container.");
+                }
+            } else {
+                console.error("Sub-container not found.");
+            }
+        }
+
+        function isPrintableCharacter(key) {
+            // Adjust this whitelist as needed
+            const printableChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()-_=+[]{}|;':\",./<>?`~ ";
+            return printableChars.includes(key);
+        }
+
+        // ... (Your existing code to create the DOM elements) ...
+
+        // Add event listeners to each sub-container
+        const subContainers = document.querySelectorAll('.sub-container');
+        subContainers.forEach(subContainer => {
+            subContainer.addEventListener('click', openfile);
+        });
+
+        function searchtyping(ele) {
+
+
+            if (event.key === 'Enter') {
+                search();
+            }
+            // else if (isPrintableCharacter(event.key)) {
+            //     updateAmplitude();
+            // }
+        }
+
+
+        // Run the function to apply blur
+
+
+        // Reapply blur if the DOM changes (e.g., more elements are added dynamically)
+        // const observer = new MutationObserver(applyBlurBasedOnZIndex);
+        // observer.observe(document.body, { childList: true, attributes: true, subtree: false });
+        function isElementNear(element, type) {
+            // Get screen dimensions
+
+            let tolerance = 150;
+            const screenWidth = window.innerWidth;
+            const screenHeight = window.innerHeight;
+
+            // Get element dimensions and position
+            const elementRect = element.getBoundingClientRect();
+            const elementWidth = elementRect.width;
+            const elementHeight = elementRect.height;
+            const elementCenterX = elementRect.left + elementWidth / 2;
+            const elementCenterY = elementRect.top + elementHeight / 2;
+
+            // Calculate screen center
+            let screenCenterX = 0;
+            let screenCenterY = 0;
+            let xDifference = 0;
+            let yDifference = 0;
+            if (type == 'center') {
+                screenCenterX = screenWidth / 2;
+                screenCenterY = screenHeight / 2;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+            }
+            else if (type == 'left') {
+                screenCenterX = screenWidth * 0.25;
+                screenCenterY = screenHeight / 2;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+            } else if (type == 'right') {
+                screenCenterX = screenWidth * 0.75;
+                screenCenterY = screenHeight / 2;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+
+            }
+
+
+            else if (type == 'top-left') { //lefts
+                screenCenterX = screenWidth * -0.05;
+                screenCenterY = 0;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+            } else if (type == 'edge-left') {
+                screenCenterX = 0;
+                screenCenterY = screenHeight * 0.3;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+            } else if (type == 'bottom-left') {
+                screenCenterX = 0;
+                screenCenterY = screenHeight * 0.8;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+            } else if (type == 'top-right') { //rights
+                screenCenterX = screenWidth * 1.05;
+                screenCenterY = 0;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+            } else if (type == 'edge-right') {
+                screenCenterX = screenWidth * 1;
+                screenCenterY = screenHeight * 0.3;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+            } else if (type == 'bottom-right') {
+
+                screenCenterX = screenWidth * 1;
+                screenCenterY = screenHeight * 0.8;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            } else if (type == 'top-center') {
+
+                screenCenterX = screenWidth * 0.5;
+                screenCenterY = 0;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            } else if (type == 'bottom-center') {
+
+                screenCenterX = screenWidth * 0.5;
+                screenCenterY = screenHeight * 1;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementRect.top - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            } else if (type == 'up-left') { //ups
+
+                screenCenterX = screenWidth * 0.25;
+                screenCenterY = screenHeight * 0.25;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            } else if (type == 'down-left') {
+
+                screenCenterX = screenWidth * 0.25;
+                screenCenterY = screenHeight * 0.75;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            } else if (type == 'up-right') {
+
+                screenCenterX = screenWidth * 0.75;
+                screenCenterY = screenHeight * 0.25;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            } else if (type == 'down-right') {
+
+                screenCenterX = screenWidth * 0.75;
+                screenCenterY = screenHeight * 0.75;
+                xDifference = Math.abs(elementCenterX - screenCenterX);
+                yDifference = Math.abs(elementCenterY - screenCenterY);
+                console.log(xDifference <= tolerance && yDifference <= tolerance);
+            }
+
+
+
+
+
+
+            return xDifference <= tolerance && yDifference <= tolerance;
+        }
+
+
+        function advancedSearch(inputValue) {
+            // Regular expressions for pattern matching
+            const subjectRegex = /(physics|chemistry|biology|mathematics)/i;
+            const unitRegex = /unit\s*(\d+)/i;
+            const seriesRegex = /(january|jan|june|jun|october|oct)/i; // Matches full or abbreviated month names
+            const yearRegex = /(\d{2,4})/i;
+            const typeRegex = /(qp|ms)/i;
+            const urlRegex = /(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?/i;
+
+
+            let searchURL;
+
+            // 1. Past Paper Check
+            if (subjectRegex.test(inputValue) && unitRegex.test(inputValue) && seriesRegex.test(inputValue) && yearRegex.test(inputValue) && typeRegex.test(inputValue)) {
+                let subject = inputValue.match(subjectRegex)[0].toLowerCase();
+                let unit = inputValue.match(unitRegex)[1];
+                let series = inputValue.match(seriesRegex)?.[0].toLowerCase();
+                subject = subject.charAt(0).toUpperCase() + subject.slice(1);
+                let year = inputValue.match(yearRegex)[0];
+                let type = inputValue.match(typeRegex)[0].toUpperCase();
+
+                switch (series) {
+                    case "jan":
+                        series = "January";
+                        break;
+                    case "jun":
+                        series = "June";
+                        break;
+                    case "oct":
+                        series = "October";
+                        break;
+                    case "january":
+                        series = "January";
+                        break;
+                    case "june":
+                        series = "June";
+                        break;
+                    case "october":
+                        series = "October";
+                        break;
+                }
+
+                year = year.length === 2 ? "20" + year : year;
+
+                let baseUrl = "https://www.physicsandmathstutor.com/pdf-pages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2F";
+                searchURL = `${baseUrl}${subject}%2FA-level%2FPast-Papers%2FEdexcel-IAL%2F2018-spec%2FUnit-${unit}%2F${type}%2F${series}%20${year}%20(IAL)%20${type}.pdf`;
+
+                //Construct URL for past papers (adjust as needed for your dynamicpapers.com structure)
+                // searchURL = `https://dynamicpapers.com/wp-content/uploads/20${subject.charAt(0).toUpperCase() + subject.slice(1)}-Unit-${unit}-${series}-${year}.pdf`;
+
+                // https://www.physicsandmathstutor.com/pdf-pages/?pdf=https%3A%2F%2Fpmt.physicsandmathstutor.com%2Fdownload%2FBiology%2FA-level%2FPast-Papers%2FEdexcel-IAL%2F2018-spec%2FUnit-5%2FQP%2FJanuary%202021%20(IAL)%20QP.pdf
+
+            } else if (urlRegex.test(inputValue)) {
+                // 2. URL Check
+                let matchedURL = inputValue.match(urlRegex);
+                searchURL = matchedURL[0].startsWith("http") ? matchedURL[0] : "https://" + matchedURL[0];
+
+            } else if (inputValue.toLowerCase() === 'camera') {
+                searchURL = 'Camera';
+            } else if (inputValue.toLowerCase() === 'calculator') {
+                searchURL = 'https://www.desmos.com/calculator';
+            }
+
+            else {
+                // 3. Random Words Check
+                let keywords = inputValue.trim().replace(/\s+/g, '+'); //replace spaces with + for URL encoding
+                searchURL = `https://www.google.com/search?igu=1&ei=&q=${keywords}`;
+            }
+
+            //Error Handling: Check if a URL was successfully generated
+            if (searchURL) {
+                createNewTab(searchURL); //Call your existing updatelink function
+            } else {
+                console.error("Invalid input format. Please provide a valid past paper description, URL, or search terms.");
+                // Optionally display an error message to the user.
+                alert("Invalid input format. Please try again.");
+            }
+        }
+
+        function hexToRgb(hex) {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? {
+                r: parseInt(result[1], 16),
+                g: parseInt(result[2], 16),
+                b: parseInt(result[3], 16)
+            } : null;
+        }
+
+
+
+
+
+    </script>
+
+
+
+<script async src="https://ga.jspm.io/npm:es-module-shims@1.6.3/dist/es-module-shims.js" crossorigin="anonymous"></script>
+<script type="importmap">
+  {
+    "imports": {
+      "three": "https://unpkg.com/three@0.154.0/build/three.module.js",
+      "three/addons/": "https://unpkg.com/three@0.154.0/examples/jsm/"
+    }
+  }
+</script>
+
+<script type="module">
+  import * as THREE from "three";
+
+  const img_base = "https://threejs.org/examples/textures/kandao3.jpg";
+  const img_depth = "https://threejs.org/examples/textures/kandao3_depthmap.jpg";
+
+  let camera, scene, renderer, skybox;
+  let targetRotationX = 0; // Target rotation for X (vertical tilt)
+  let targetRotationY = 0; // Target rotation for Y (horizontal rotation)
+  let currentRotationX = 0; // Current rotation for X
+  let currentRotationY = 0; // Current rotation for Y
+
+  function init() {
+    const container = document.getElementById("skybox");
+
+    // Scene setup
+    scene = new THREE.Scene();
+    scene.background = new THREE.Color(0x101010);
+
+    // Lighting
+    const light = new THREE.AmbientLight(0xffffff, 3.3);
+    scene.add(light);
+
+    // Camera
+    camera = new THREE.PerspectiveCamera(
+      70,
+      window.innerWidth / window.innerHeight,
+      1,
+      50
+    );
+    scene.add(camera);
+
+    // Panoramic Sphere
+    const panoSphereGeo = new THREE.SphereGeometry(30, 500, 500);
+    const panoSphereMat = new THREE.MeshStandardMaterial({
+      side: THREE.BackSide,
+      displacementScale: -28.0
+    });
+    skybox = new THREE.Mesh(panoSphereGeo, panoSphereMat);
+
+    // Load texture and depth map
+    const manager = new THREE.LoadingManager();
+    const loader = new THREE.TextureLoader(manager);
+
+    loader.load(img_base, function (texture) {
+      texture.colorSpace = THREE.SRGBColorSpace;
+      texture.minFilter = THREE.NearestFilter;
+      texture.generateMipmaps = false;
+      skybox.material.map = texture;
+    });
+
+    loader.load(img_depth, function (depth) {
+      depth.minFilter = THREE.NearestFilter;
+      depth.generateMipmaps = false;
+      skybox.material.displacementMap = depth;
+    });
+
+    // Add the skybox to the scene when textures are loaded
+    manager.onLoad = function () {
+      scene.add(skybox);
+    };
+
+    // Renderer setup
+    renderer = new THREE.WebGLRenderer({ antialias: true });
+    renderer.setPixelRatio(window.devicePixelRatio);
+    renderer.setSize(window.innerWidth, window.innerHeight);
+    renderer.useLegacyLights = false;
+
+    container.appendChild(renderer.domElement);
+
+    // Event listeners
+    window.addEventListener("resize", onWindowResize);
+    window.addEventListener("mousemove", onMouseMove);
+  }
+
+  // Smooth mouse movement handler
+  function onMouseMove(event) {
+    const mouseX = (event.clientX / window.innerWidth) * 2 - 1; // Normalize X to range [-1, 1]
+    const mouseY = (event.clientY / window.innerHeight) * 2 - 1; // Normalize Y to range [-1, 1]
+
+    // Set target rotation with reduced movement (subtle motion)
+    targetRotationY = mouseX * Math.PI * 0.2; // Horizontal rotation
+    targetRotationX = mouseY * Math.PI * 0.2; // Vertical tilt
+  }
+
+  // Update camera and renderer on window resize
+  function onWindowResize() {
+    camera.aspect = window.innerWidth / window.innerHeight;
+    camera.updateProjectionMatrix();
+    renderer.setSize(window.innerWidth, window.innerHeight);
+  }
+
+  // Animation loop with easing
+  function animate() {
+    requestAnimationFrame(animate);
+
+    // Smoothly interpolate (ease) towards the target rotation
+    currentRotationX += (targetRotationX - currentRotationX) * 0.005; // Ease X
+    currentRotationY += (targetRotationY - currentRotationY) * 0.005; // Ease Y
+
+    // Apply the eased rotations to the skybox
+    skybox.rotation.x = currentRotationX;
+    skybox.rotation.y = currentRotationY;
+
+    renderer.render(scene, camera);
+  }
+
+  // Initialize and start animation
+  init();
+  animate();
+</script>
+</body>
+
+</html>
